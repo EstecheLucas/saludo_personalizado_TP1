@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saludo Personalizado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ingresa tu nombre</h1>
+  <input type="text" id="nombre" placeholder="Escribe tu nombre" />
+  <button onclick="obtenerSaludo()">Saludar</button>
+  <p id="respuesta"></p>
+
+  <script>
+    function obtenerSaludo() {
+      const nombre = document.getElementById('nombre').value;
+      if (!nombre) {
+        alert('Por favor ingresa un nombre');
+        return;
+      }
+
+      fetch(`http://localhost:3000/saludo/${nombre}`)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('respuesta').textContent = data;
+        })
+        .catch(error => {
+          document.getElementById('respuesta').textContent = 'Error al conectar con el servidor';
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+</html>
